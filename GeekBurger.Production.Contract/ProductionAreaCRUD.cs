@@ -9,7 +9,7 @@ namespace GeekBurger.Production.Contract
         public string Name { get; set; }
         public ProductionAreaType Type { get; set; }
 
-        public List<RestrictionTO> Restrictions { get; set; }
+        public List<RestrictionCRUD> Restrictions { get; set; }
 
         public enum ProductionAreaType
         {

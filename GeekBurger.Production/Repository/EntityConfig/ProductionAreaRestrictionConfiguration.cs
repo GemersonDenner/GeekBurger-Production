@@ -15,6 +15,15 @@ namespace GeekBurger.Production.Repository.EntityConfig
             builder.ToTable("TBProductionAreaRestriction");
 
             builder.HasKey(par => new { par.ProductionAreaId, par.RestrictionId});
+
+
+            builder.HasOne(par => par.ProductionArea)
+                    .WithMany(pa => pa.ProductionAreaRestrictions)
+                    .HasForeignKey(par => par.ProductionAreaId);
+
+            builder.HasOne(par => par.Restriction)
+                    .WithMany(r => r.ProductionAreasRestriction)
+                    .HasForeignKey(par => par.RestrictionId);
         }
     }
 }

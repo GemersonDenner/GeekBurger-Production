@@ -12,14 +12,14 @@ namespace GeekBurger.Production.Controllers
 {
     [Produces("application/json")]
     [Route("api/production")]
-    public class ProductionController : Controller
+    public class ProductionAreasController : Controller
     {
-        private IProductionRepository _productionRepository;
+        private IProductionAreaRepository _productionAreaRepository;
         private IMapper _mapper;
 
-        public ProductionController(IProductionRepository productionRepository, IMapper mapper)
+        public ProductionAreasController(IProductionAreaRepository productionAreaRepository, IMapper mapper)
         {
-            _productionRepository = productionRepository;
+            _productionAreaRepository = productionAreaRepository;
             _mapper = mapper;
         }
 
@@ -36,7 +36,7 @@ namespace GeekBurger.Production.Controllers
         [HttpGet("areas")]
         public IActionResult GetAreas()
         {
-            var availableProductionAreas = _productionRepository.GetAvailableProductionAreas().ToList();
+            var availableProductionAreas = _productionAreaRepository.GetAvailableProductionAreas().ToList();
 
             if (availableProductionAreas.Count <= 0)
                 return NotFound();

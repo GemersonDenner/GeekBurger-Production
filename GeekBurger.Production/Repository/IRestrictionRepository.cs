@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GeekBurger.Production.Repository
 {
-    public interface IProductionRepository
+    public interface IRestrictionRepository
     {
-        IEnumerable<ProductionArea> GetAvailableProductionAreas();
+        Restriction GetRestrictionByName(string restrictionName);
     }
 }

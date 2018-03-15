@@ -10,6 +10,8 @@ using GeekBurger.Production.Repository;
 using Microsoft.EntityFrameworkCore;
 using GeekBurger.Production.Extension;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Swagger;
+using Newtonsoft.Json.Serialization;
 
 namespace GeekBurger.Production
 {
@@ -20,7 +22,7 @@ namespace GeekBurger.Production
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var mvcCoreBuilder = services.AddMvcCore();
+            var mvcCoreBuilder = services.AddMvcCore().AddApiExplorer();
 
             mvcCoreBuilder
                 .AddFormatterMappings()
@@ -28,11 +30,29 @@ namespace GeekBurger.Production
                 .AddCors();
 
 
+            /*
+            services.AddMvc()
+                        .AddJsonOptions(o =>
+                                            {
+                                                o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                                                o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                                            }
+                                        );
+            */
+
+
             services.AddAutoMapper();
 
 
             services.AddDbContext<ProductionContext>(o => o.UseInMemoryDatabase("geekburger-production"));
-            services.AddScoped<IProductionRepository, ProductionRepository>();
+            services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
+            services.AddScoped<IRestrictionRepository, RestrictionRepository>();
+
+
+            services.AddSwaggerGen(c => {
+                                            c.SwaggerDoc("v1", new Info { Title = "Production Area API", Version = "v1" });
+                                        }
+                                  );
 
         }
 
@@ -49,6 +69,15 @@ namespace GeekBurger.Production
 
 
             productionContext.Seed();
+
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>   {
+                                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Production Area API v1");
+                                    }
+
+                            );
+
 
             /*
             app.Run(async (context) =>

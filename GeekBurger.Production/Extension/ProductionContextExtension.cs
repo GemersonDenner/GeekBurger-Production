@@ -62,7 +62,7 @@ namespace GeekBurger.Production.Extension
                                                     {
                                                         ProductionAreaId = new Guid("81b5b371-1fe5-4be6-9eb6-e2a81aa62174")
                                                         , Name = "Chapa sem gluten"
-                                                        , Type = ProductionAreaType.Fritadeira
+                                                        , Type = ProductionAreaType.Chapa
                                                         , ProductionAreaRestrictions
                                                             = new List<ProductionAreaRestriction>
                                                             {
@@ -84,14 +84,14 @@ namespace GeekBurger.Production.Extension
                                                     , new ProductionArea
                                                     {   ProductionAreaId = new Guid("58431438-145b-43f5-8136-095cb1622d1c")
                                                         , Name = "Esteira 1"
-                                                        , Type = ProductionAreaType.Fritadeira
+                                                        , Type = ProductionAreaType.Esteira
                                                         , ProductionAreaRestrictions = null
                                                     }
                                                     , new ProductionArea
                                                     {
                                                         ProductionAreaId = new Guid("bb38b77a-6706-46b0-973c-8084bbb42ece")
                                                         , Name = "Esteira sem gluten"
-                                                        , Type = ProductionAreaType.Fritadeira
+                                                        , Type = ProductionAreaType.Esteira
                                                         , ProductionAreaRestrictions
                                                             = new List<ProductionAreaRestriction>
                                                             {

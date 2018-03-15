@@ -21,6 +21,8 @@ namespace GeekBurger.Production.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ProductionAreaConfiguration());
+            modelBuilder.ApplyConfiguration(new RestrictionConfiguration());
             modelBuilder.ApplyConfiguration(new ProductionAreaRestrictionConfiguration());
         }
     }
