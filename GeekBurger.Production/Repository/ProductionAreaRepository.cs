@@ -21,9 +21,18 @@ namespace GeekBurger.Production.Repository
 
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
         {
-            return _context.ProductionAreas?.Include(pa => pa.ProductionAreaRestrictions)
+            return _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
                                                 .ThenInclude(r => r.Restriction)
                                                 .ToList();
+        }
+
+        public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
+        {
+            var a = _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
+                                                .ThenInclude(r => r.Restriction).Where(r => r.Name.Equals(restrictionName, StringComparison.InvariantCultureIgnoreCase))
+                                                .ToList();
+
+            return a;
         }
 
 

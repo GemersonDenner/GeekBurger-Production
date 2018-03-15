@@ -36,7 +36,7 @@ namespace GeekBurger.Production.Controllers
         [HttpGet("areas")]
         public IActionResult GetAreas()
         {
-            var availableProductionAreas = _productionAreaRepository.GetAvailableProductionAreas().ToList();
+            var availableProductionAreas = _productionAreaRepository.GetAvailableProductionAreas()?.ToList();
 
             if (availableProductionAreas.Count <= 0)
                 return NotFound();
@@ -44,6 +44,24 @@ namespace GeekBurger.Production.Controllers
             var availableProductionAreasReturn = _mapper.Map<IEnumerable<ProductionAreaTO>>(availableProductionAreas);
 
             return Ok(availableProductionAreasReturn);
+        }
+
+
+        [HttpGet("areas/{restrictionName}", Name = "GetProductionAreasByRestrictionName")]
+        public IActionResult GetProductionAreasByRestrictionName(string restrictionName)
+        {
+            if (String.IsNullOrEmpty(restrictionName))
+                return BadRequest();
+
+
+            var productionAreas = _productionAreaRepository.GetProductionAreasByRestrictionName(restrictionName)?.ToList();
+
+            if (productionAreas.Count <= 0)
+                return NotFound();
+
+            var productionAreasReturn = _mapper.Map<IEnumerable<ProductionAreaTO>>(productionAreas);
+
+            return Ok(productionAreasReturn);
         }
 
     }
