@@ -28,11 +28,24 @@ namespace GeekBurger.Production.Repository
 
         public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
         {
-            var a = _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
-                                                .ThenInclude(r => r.Restriction).Where(r => r.Name.Equals(restrictionName, StringComparison.InvariantCultureIgnoreCase))
-                                                .ToList();
+            List<ProductionArea> retorno = new List<ProductionArea>();
 
-            return a;
+            List<ProductionArea> pa = _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
+                                        .ThenInclude(r => r.Restriction).ToList();
+
+            foreach(ProductionArea p in pa)
+            {
+                foreach(ProductionAreaRestriction par in p.ProductionAreaRestrictions)
+                {
+                    if(par.Restriction.Name == restrictionName)
+                    {
+                        retorno.Add(p);
+                        break;
+                    }
+                }
+            }
+
+            return retorno;
         }
 
 

@@ -22,14 +22,17 @@ namespace GeekBurger.Production.Helper
         {
             destination.Restrictions = new List<RestrictionTO>();
 
-            foreach (ProductionAreaRestriction par in source.ProductionAreaRestrictions)
-            {
-                destination.Restrictions.Add(
-                                                new RestrictionTO {
-                                                                    Name = par.Restriction.Name
-                                                                    , RestrictionId = par.RestrictionId
-                                                                  }
-                                            );
+            if (source.ProductionAreaRestrictions != null)
+            { 
+                foreach (ProductionAreaRestriction par in source.ProductionAreaRestrictions)
+                {
+                    destination.Restrictions.Add(
+                                                    new RestrictionTO {
+                                                                        Name = par.Restriction.Name
+                                                                        , RestrictionId = par.RestrictionId
+                                                                      }
+                                                );
+                }
             }
         }
     }
