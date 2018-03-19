@@ -16,14 +16,10 @@ namespace GeekBurger.Production.Repository
 
 
         public DbSet<ProductionArea> ProductionAreas { get; set; }
-        public DbSet<Restriction> Restrictions { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductionAreaConfiguration());
-            modelBuilder.ApplyConfiguration(new RestrictionConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductionAreaRestrictionConfiguration());
         }
     }
 }

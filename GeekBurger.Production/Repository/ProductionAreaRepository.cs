@@ -22,45 +22,24 @@ namespace GeekBurger.Production.Repository
 
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
         {
-            return _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
-                                                .ThenInclude(r => r.Restriction)
-                                                .ToList();
+            return _context.ProductionAreas?.ToList();
         }
 
         public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
         {
-            List<ProductionArea> retorno = new List<ProductionArea>();
-
-            List<ProductionArea> pa = _context.ProductionAreas?.Include(par => par.ProductionAreaRestrictions)
-                                        .ThenInclude(r => r.Restriction).ToList();
-
-            foreach(ProductionArea p in pa)
-            {
-                foreach(ProductionAreaRestriction par in p.ProductionAreaRestrictions)
-                {
-                    if(par.Restriction.Name == restrictionName)
-                    {
-                        retorno.Add(p);
-                        break;
-                    }
-                }
-            }
-
-            return retorno;
+            return _context.ProductionAreas?.Where(pa => pa.Restrictions.Contains(restrictionName)).ToList();
         }
 
 
         public ProductionArea GetProductionAreaById(Guid productionAreaId)
         {
             return _context.ProductionAreas?
-                                    .Include(productionArea => productionArea.ProductionAreaRestrictions)
-                                    .ThenInclude(r => r.Restriction)
-                                    .FirstOrDefault(productionArea => productionArea.ProductionAreaId == productionAreaId);
+                                    .FirstOrDefault(productionArea => productionArea.Id == productionAreaId);
         }
 
         public bool CreateProductionArea(ProductionArea productionArea)
         {
-            productionArea.ProductionAreaId = new Guid();
+            productionArea.Id = new Guid();
             _context.ProductionAreas.Add(productionArea);
 
             return true;
@@ -68,15 +47,14 @@ namespace GeekBurger.Production.Repository
 
         public bool UpdateProductionArea(Guid productionAreaId, ProductionArea updatedProductionArea)
         {
-            var productionAreaToUpdate = _context.ProductionAreas?.FirstOrDefault(pa => pa.ProductionAreaId == productionAreaId);
+            var productionAreaToUpdate = _context.ProductionAreas?.FirstOrDefault(pa => pa.Id == productionAreaId);
 
             if (EqualityComparer<ProductionArea>.Default.Equals(productionAreaToUpdate, default(ProductionArea)))
                 return false;
 
 
             productionAreaToUpdate.Name = updatedProductionArea.Name;
-            productionAreaToUpdate.Type = updatedProductionArea.Type;
-            productionAreaToUpdate.ProductionAreaRestrictions = updatedProductionArea.ProductionAreaRestrictions;
+            productionAreaToUpdate.Restrictions = updatedProductionArea.Restrictions;
 
             _context.ProductionAreas.Update(productionAreaToUpdate);
             
@@ -85,7 +63,7 @@ namespace GeekBurger.Production.Repository
 
         public bool RemoveProductionArea(Guid productionAreaId)
         {
-            var productionAreaToDelete = _context.ProductionAreas?.FirstOrDefault(pa => pa.ProductionAreaId == productionAreaId);
+            var productionAreaToDelete = _context.ProductionAreas?.FirstOrDefault(pa => pa.Id == productionAreaId);
 
             if (EqualityComparer<ProductionArea>.Default.Equals(productionAreaToDelete, default(ProductionArea)))
                 return false;

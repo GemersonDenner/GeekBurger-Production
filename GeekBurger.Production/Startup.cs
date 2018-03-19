@@ -46,7 +46,6 @@ namespace GeekBurger.Production
 
             services.AddDbContext<ProductionContext>(o => o.UseInMemoryDatabase("geekburger-production"));
             services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
-            services.AddScoped<IRestrictionRepository, RestrictionRepository>();
 
 
             services.AddSwaggerGen(c => {

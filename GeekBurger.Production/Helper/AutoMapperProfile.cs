@@ -12,8 +12,8 @@ namespace GeekBurger.Production.Helper
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductionArea, ProductionAreaTO>().AfterMap<MatchRestrictionFromRepositoryToTO>();
-            CreateMap<ProductionAreaCRUD, ProductionArea>().AfterMap<MatchRestrictionFromCRUDToRepository>();
+            CreateMap<ProductionArea, ProductionAreaTO>();
+            CreateMap<ProductionAreaCRUD, ProductionArea>();
         }
     }
 }

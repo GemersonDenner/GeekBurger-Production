@@ -52,9 +52,6 @@ namespace GeekBurger.Production.Controllers
 
             var _productionArea = _mapper.Map<ProductionArea>(newProductionArea);
 
-            if (_productionArea.ProductionAreaRestrictions?.ToList().Where(par => par.RestrictionId == Guid.Empty).Count() > 0)
-                return new UnprocessableEntityResult(ModelState);
-
 
             var resultProductionAreaCreated = _productionAreaRepository.CreateProductionArea(_productionArea);
 
