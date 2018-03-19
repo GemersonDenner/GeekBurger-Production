@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 using GeekBurger.Production.Model;
-
+using GeekBurger.Production.Service;
 
 namespace GeekBurger.Production.Repository
 {
@@ -13,6 +13,7 @@ namespace GeekBurger.Production.Repository
     {
 
         private ProductionContext _context;
+        private IProductionAreaChangedService _productionAreaChangedService;
 
         public ProductionAreaRepository(ProductionContext context)
         {
@@ -98,7 +99,13 @@ namespace GeekBurger.Production.Repository
 
         public void Save()
         {
+            _productionAreaChangedService
+                .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
+
             _context.SaveChanges();
+
+
+            _productionAreaChangedService.SendMessagesAsync();
         }
     }
 }
