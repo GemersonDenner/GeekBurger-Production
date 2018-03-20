@@ -30,9 +30,9 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 2 - No Gluten&Wheat"
                                                         , Status = true
                                                         , Restrictions
-                                                            = new List<string>
+                                                            = new List<Restriction>
                                                             {
-                                                                "gluten", "wheat"
+                                                                new Restriction{Name = "gluten" }, new Restriction{Name = "wheat" }
                                                             }
                                                     }
                                                     , new ProductionArea
@@ -40,9 +40,9 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 3 - No Soy"
                                                         , Status = true
                                                         , Restrictions
-                                                           = new List<string>
+                                                           = new List<Restriction>
                                                             {
-                                                                "soy"
+                                                                new Restriction{Name = "soy" }
                                                             }
                                                     }
                                                     , new ProductionArea
@@ -51,9 +51,9 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 4 - No Milk"
                                                         , Status = true
                                                         , Restrictions
-                                                            = new List<string>
+                                                            = new List<Restriction>
                                                             {
-                                                                "milk"
+                                                                new Restriction{Name = "milk" }
                                                             }
                                                     }
                                                     , new ProductionArea
@@ -61,9 +61,10 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 4 - No Soy, Milk & Gluten"
                                                         , Status = true
                                                         , Restrictions
-                                                            = new List<string>
+                                                            = new List<Restriction>
                                                             {
-                                                                "milk", "soy", "gluten", "wheat"
+                                                                new Restriction{Name = "milk" }, new Restriction{Name = "soy" }
+                                                                , new Restriction{Name = "gluten" }, new Restriction{Name = "wheat" }
                                                             }
                                                     }
                                                     , new ProductionArea
@@ -72,9 +73,9 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 5 - No Peanuts"
                                                         , Status = true
                                                         , Restrictions
-                                                            = new List<string>
+                                                            = new List<Restriction>
                                                             {
-                                                                    "peanuts"
+                                                                    new Restriction{Name = "peanuts" }
                                                             }
                                                     }
                                                     , new ProductionArea
@@ -83,9 +84,9 @@ namespace GeekBurger.Production.Extension
                                                         , Name = "Grill 5 - No Sugar"
                                                         , Status = true
                                                         , Restrictions
-                                                            = new List<string>
+                                                            = new List<Restriction>
                                                             {
-                                                                "sugar"
+                                                                new Restriction{Name = "sugar" }
                                                             }
                                                     }
                                                 }

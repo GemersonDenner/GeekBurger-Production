@@ -12,6 +12,7 @@ namespace GeekBurger.Production.Model
         public Guid Id { get; set; }
         public string Name { get; set; }
         public bool Status { get; set; }
-        public List<string> Restrictions { get; set; }
+
+        public List<Restriction> Restrictions { get; set; }
     }
 }

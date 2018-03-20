@@ -27,7 +27,8 @@ namespace GeekBurger.Production.Repository
 
         public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
         {
-            return _context.ProductionAreas?.Where(pa => pa.Restrictions.Contains(restrictionName)).ToList();
+            return _context.ProductionAreas?
+                                .Include(pa => pa.Restrictions.Where(r => r.Name.Equals(restrictionName, StringComparison.InvariantCultureIgnoreCase))).ToList();
         }
 
 
