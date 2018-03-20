@@ -19,10 +19,7 @@ namespace GeekBurger.Production.Helper
 
         public void Process(ProductionArea source, ProductionAreaTO destination)
         {
-            foreach(Restriction restriction in source.Restrictions)
-            {
-                destination.Restrictions.Add(restriction.Name);
-            }
+            destination.Restrictions = source.Restrictions?.Select(r => r.Name).ToList();
         }
     }
 }
