@@ -12,7 +12,7 @@ namespace GeekBurger.Production.Helper
     {
         public AutoMapperProfile()
         {
-            CreateMap<ProductionArea, ProductionAreaTO>().ForMember(r => r.Restrictions, opt => opt.MapFrom(src => src.Name)); //AfterMap<MatchTOFromRepository>();
+            CreateMap<ProductionArea, ProductionAreaTO>().AfterMap<MatchTOFromRepository>(); //.ForMember(r => r.Restrictions, opt => opt.MapFrom(src => src.Name)); //AfterMap<MatchTOFromRepository>();
             CreateMap<ProductionAreaCRUD, ProductionArea>();
         }
     }
