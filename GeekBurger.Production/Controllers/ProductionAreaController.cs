@@ -64,7 +64,7 @@ namespace GeekBurger.Production.Controllers
             var productionAreaTO = _mapper.Map<ProductionAreaTO>(_productionArea);
 
             return CreatedAtRoute(  "GetProductionArea"
-                                    , new { idProductionArea = productionAreaTO.ProductionAreaId }
+                                    , new { productionAreaId = productionAreaTO.Id }
                                     , productionAreaTO
                                  );
         }
@@ -85,14 +85,14 @@ namespace GeekBurger.Production.Controllers
             if (!resultProductionAreaUpdated)
                 return NotFound();
 
-
+            _updatedProductionArea.Id = productionAreaId;
             _productionAreaRepository.Save();
 
 
             var productionAreaTO = _mapper.Map<ProductionAreaTO>(_updatedProductionArea);
 
             return CreatedAtRoute("GetProductionArea"
-                                    , new { idProductionArea = productionAreaTO.ProductionAreaId }
+                                    , new { productionAreaId = productionAreaTO.Id }
                                     , productionAreaTO
                                  );
         }

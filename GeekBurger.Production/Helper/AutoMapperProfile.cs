@@ -14,7 +14,9 @@ namespace GeekBurger.Production.Helper
         {
             CreateMap<ProductionArea, ProductionAreaTO>().AfterMap<MatchTOFromRepository>();
             //CreateMap<ProductionArea, ProductionAreaTO>().ForMember(r => r.Restrictions, opt => opt.MapFrom(src => src.Restrictions.Select(res => res.Name).ToArray()));
-            CreateMap<ProductionAreaCRUD, ProductionArea>();
+            CreateMap<ProductionAreaCRUD, ProductionArea>()
+                                            .ForMember(dest => dest.Restrictions, opt => opt.Ignore())
+                                            .AfterMap<MatchRepositoryFromCRUD>();
         }
     }
 }

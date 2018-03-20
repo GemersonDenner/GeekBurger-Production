@@ -28,14 +28,17 @@ namespace GeekBurger.Production.Repository
         public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
         {
             return _context.ProductionAreas?
-                                .Include(pa => pa.Restrictions).Where(w => w.Restrictions.Any(r => r.Name.Equals(restrictionName, StringComparison.InvariantCultureIgnoreCase))).ToList();
+                                .Include(pa => pa.Restrictions)
+                                .Where(w => !w.Restrictions.Any(r => r.Name.Equals(  restrictionName
+                                                                                    , StringComparison.InvariantCultureIgnoreCase))
+                                                                                  ).ToList();
         }
 
 
         public ProductionArea GetProductionAreaById(Guid productionAreaId)
         {
-            return _context.ProductionAreas?
-                                    .FirstOrDefault(productionArea => productionArea.Id == productionAreaId);
+            return _context.ProductionAreas?.Include(r => r.Restrictions)
+                                            .FirstOrDefault(productionArea => productionArea.Id == productionAreaId);
         }
 
         public bool CreateProductionArea(ProductionArea productionArea)
@@ -48,7 +51,9 @@ namespace GeekBurger.Production.Repository
 
         public bool UpdateProductionArea(Guid productionAreaId, ProductionArea updatedProductionArea)
         {
-            var productionAreaToUpdate = _context.ProductionAreas?.FirstOrDefault(pa => pa.Id == productionAreaId);
+            var productionAreaToUpdate = _context.ProductionAreas?
+                                                    .Include(r => r.Restrictions)
+                                                    .FirstOrDefault(pa => pa.Id == productionAreaId);
 
             if (EqualityComparer<ProductionArea>.Default.Equals(productionAreaToUpdate, default(ProductionArea)))
                 return false;
@@ -78,13 +83,14 @@ namespace GeekBurger.Production.Repository
 
         public void Save()
         {
-            _productionAreaChangedService
-                .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
+            //_productionAreaChangedService
+            //    .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
 
             _context.SaveChanges();
 
 
-            _productionAreaChangedService.SendMessagesAsync();
+            //_productionAreaChangedService.SendMessagesAsync();
         }
     }
 }
+//

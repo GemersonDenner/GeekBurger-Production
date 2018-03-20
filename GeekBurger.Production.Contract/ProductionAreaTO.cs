@@ -6,7 +6,7 @@ namespace GeekBurger.Production.Contract
 {
     public class ProductionAreaTO
     {
-        public Guid ProductionAreaId { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool Status { get; set; }
 
