@@ -47,8 +47,8 @@ namespace GeekBurger.Production.Controllers
         }
 
 
-        [HttpGet("areas/{restrictionName}", Name = "GetProductionAreasByRestrictionName")]
-        public IActionResult GetProductionAreasByRestrictionName(string restrictionName)
+        [HttpGet("areas/{restrictionName}", Name = "GetProductionAreasWithoutRestriction")]
+        public IActionResult GetProductionAreasWithoutRestriction(string restrictionName)
         {
             if (String.IsNullOrEmpty(restrictionName))
                 return BadRequest();
