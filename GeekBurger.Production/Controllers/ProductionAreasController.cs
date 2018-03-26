@@ -24,15 +24,6 @@ namespace GeekBurger.Production.Controllers
         }
 
 
-        internal void WaitForProduction()
-        {
-            Random waitTime = new Random();
-            int seconds = waitTime.Next(5 * 1000, 21 * 1000);
-
-            System.Threading.Thread.Sleep(seconds);
-        }
-
-
         [HttpGet("areas")]
         public IActionResult GetAreas()
         {
@@ -62,6 +53,17 @@ namespace GeekBurger.Production.Controllers
             var productionAreasReturn = _mapper.Map<IEnumerable<ProductionAreaTO>>(productionAreas);
 
             return Ok(productionAreasReturn);
+        }
+
+        [HttpPost()]
+        public IActionResult OrderFinished(Guid orderFinishedId)
+        {
+            if (Guid.Empty.Equals(orderFinishedId) || orderFinishedId == null)
+                return BadRequest();
+
+            _productionAreaRepository.PublishOrderFinished(orderFinishedId);
+
+            return Ok();
         }
 
     }

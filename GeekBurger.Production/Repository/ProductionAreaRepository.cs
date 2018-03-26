@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 using GeekBurger.Production.Model;
 using GeekBurger.Production.Service;
+using GeekBurger.Production.Contract;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GeekBurger.Production.Repository
 {
@@ -14,12 +16,18 @@ namespace GeekBurger.Production.Repository
 
         private ProductionContext _context;
         private IProductionAreaChangedService _productionAreaChangedService;
+        private IOrderFinishedService _orderFinishedService;
 
-        public ProductionAreaRepository(ProductionContext context, IProductionAreaChangedService productionAreaChangedService)
+        public ProductionAreaRepository(ProductionContext context
+                                        , IProductionAreaChangedService productionAreaChangedService
+                                        , IOrderFinishedService orderFinishedService
+                                       )
         {
             _context = context;
             _productionAreaChangedService = productionAreaChangedService;
+            _orderFinishedService = orderFinishedService;
         }
+
 
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
         {
@@ -34,6 +42,26 @@ namespace GeekBurger.Production.Repository
                                                                                     , StringComparison.InvariantCultureIgnoreCase))
                                                                                   ).ToList();
         }
+
+
+        public void PublishOrderFinished(Guid orderFinishedId)
+        {
+
+            OrderFinishedMessage orderFinished = new OrderFinishedMessage() { OrderFinishedId = orderFinishedId};
+
+            _orderFinishedService.AddToMessageList(orderFinished);
+
+
+            Random waitTime = new Random();
+            int seconds = waitTime.Next(5 * 1000, 21 * 1000);
+
+            System.Threading.Thread.Sleep(seconds);
+
+
+            _orderFinishedService.SendMessagesAsync();
+        }
+
+
 
 
         public ProductionArea GetProductionAreaById(Guid productionAreaId)
@@ -81,7 +109,6 @@ namespace GeekBurger.Production.Repository
         }
 
 
-
         public void Save()
         {
             _productionAreaChangedService
@@ -93,4 +120,3 @@ namespace GeekBurger.Production.Repository
         }
     }
 }
-//

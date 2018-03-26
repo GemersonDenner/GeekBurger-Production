@@ -9,8 +9,10 @@ namespace GeekBurger.Production.Repository
     public interface IProductionAreaRepository
     {
         IEnumerable<ProductionArea> GetAvailableProductionAreas();
-
         IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName);
+
+        void PublishOrderFinished(Guid orderFinishedId);
+
 
         ProductionArea GetProductionAreaById(Guid productionAreaId);
         bool CreateProductionArea(ProductionArea productionArea);
