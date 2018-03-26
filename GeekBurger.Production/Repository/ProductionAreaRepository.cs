@@ -15,9 +15,10 @@ namespace GeekBurger.Production.Repository
         private ProductionContext _context;
         private IProductionAreaChangedService _productionAreaChangedService;
 
-        public ProductionAreaRepository(ProductionContext context)
+        public ProductionAreaRepository(ProductionContext context, IProductionAreaChangedService productionAreaChangedService)
         {
             _context = context;
+            _productionAreaChangedService = productionAreaChangedService;
         }
 
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
@@ -83,13 +84,12 @@ namespace GeekBurger.Production.Repository
 
         public void Save()
         {
-            //_productionAreaChangedService
-            //    .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
+            _productionAreaChangedService
+                .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
 
             _context.SaveChanges();
 
-
-            //_productionAreaChangedService.SendMessagesAsync();
+            _productionAreaChangedService.SendMessagesAsync();
         }
     }
 }

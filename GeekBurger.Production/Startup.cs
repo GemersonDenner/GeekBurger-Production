@@ -12,11 +12,20 @@ using GeekBurger.Production.Extension;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json.Serialization;
+using GeekBurger.Production.Service;
+using Microsoft.Extensions.Configuration;
 
 namespace GeekBurger.Production
 {
     public class Startup
     {
+        public static IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -46,6 +55,7 @@ namespace GeekBurger.Production
 
             services.AddDbContext<ProductionContext>(o => o.UseInMemoryDatabase("geekburger-production"));
             services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
+            services.AddScoped<IProductionAreaChangedService, ProductionAreaChangedService>();
 
 
             services.AddSwaggerGen(c => {

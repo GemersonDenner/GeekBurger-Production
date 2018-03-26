@@ -18,7 +18,6 @@ namespace GeekBurger.Production.Service
 {
     public class ProductionAreaChangedService : IProductionAreaChangedService
     {
-
         private const string Topic = "ProductionAreaChangedTopic";
         private IConfiguration _configuration;
         private IMapper _mapper;
@@ -55,15 +54,15 @@ namespace GeekBurger.Production.Service
 
         public Message GetMessage(EntityEntry<ProductionArea> entity)
         {
-            var productChanged = Mapper.Map<ProductionAreaChangedMessage>(entity);
-            var productChangedSerialized = JsonConvert.SerializeObject(productChanged);
+            var productionAreaChanged = _mapper.Map<ProductionAreaChangedMessage>(entity);
+            var productChangedSerialized = JsonConvert.SerializeObject(productionAreaChanged);
             var productChangedByteArray = Encoding.UTF8.GetBytes(productChangedSerialized);
 
             return new Message
             {
                 Body = productChangedByteArray,
                 MessageId = Guid.NewGuid().ToString(),
-                Label = productChanged.ProductionArea.Name
+                Label = productionAreaChanged.ProductionArea.Name
             };
         }
 
