@@ -44,7 +44,7 @@ namespace GeekBurger.Production.Repository
         }
 
 
-        public void PublishOrderFinished(Guid orderFinishedId)
+        public OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId)
         {
 
             OrderFinishedMessage orderFinished = new OrderFinishedMessage() { OrderFinishedId = orderFinishedId};
@@ -59,6 +59,9 @@ namespace GeekBurger.Production.Repository
 
 
             _orderFinishedService.SendMessagesAsync();
+
+
+            return orderFinished;
         }
 
 

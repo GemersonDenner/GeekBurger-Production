@@ -1,4 +1,5 @@
-﻿using GeekBurger.Production.Model;
+﻿using GeekBurger.Production.Contract;
+using GeekBurger.Production.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace GeekBurger.Production.Repository
         IEnumerable<ProductionArea> GetAvailableProductionAreas();
         IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName);
 
-        void PublishOrderFinished(Guid orderFinishedId);
+        OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId);
 
 
         ProductionArea GetProductionAreaById(Guid productionAreaId);

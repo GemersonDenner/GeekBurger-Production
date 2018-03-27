@@ -61,9 +61,9 @@ namespace GeekBurger.Production.Controllers
             if (Guid.Empty.Equals(orderFinishedId) || orderFinishedId == null)
                 return BadRequest();
 
-            _productionAreaRepository.PublishOrderFinished(orderFinishedId);
+            var orderFinishedMessage =_productionAreaRepository.PublishOrderFinished(orderFinishedId);
 
-            return Ok();
+            return Ok(orderFinishedMessage);
         }
 
     }
