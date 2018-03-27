@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GeekBurger.Production.Repository
 {
+    /// <summary>
+    /// Repositório da área de produção
+    /// </summary>
     public class ProductionAreaRepository : IProductionAreaRepository
     {
 
@@ -18,6 +21,12 @@ namespace GeekBurger.Production.Repository
         private IProductionAreaChangedService _productionAreaChangedService;
         private IOrderFinishedService _orderFinishedService;
 
+        /// <summary>
+        /// Inicialização com o contexto necessário e as interfaces já implementadas
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="productionAreaChangedService"></param>
+        /// <param name="orderFinishedService"></param>
         public ProductionAreaRepository(ProductionContext context
                                         , IProductionAreaChangedService productionAreaChangedService
                                         , IOrderFinishedService orderFinishedService
@@ -29,11 +38,20 @@ namespace GeekBurger.Production.Repository
         }
 
 
+        /// <summary>
+        /// Busca de áreas de produção disponíveis (ligadas)
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
         {
             return _context.ProductionAreas?.Include(r => r.Restrictions).ToList();
         }
 
+        /// <summary>
+        /// Busca áreas de produção que possuam respectiva restrição
+        /// </summary>
+        /// <param name="restrictionName"></param>
+        /// <returns></returns>
         public IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName)
         {
             return _context.ProductionAreas?
@@ -43,7 +61,11 @@ namespace GeekBurger.Production.Repository
                                                                                   ).ToList();
         }
 
-
+        /// <summary>
+        /// Método que efetua a publicação quando o pedido é finalizado (produzido)
+        /// </summary>
+        /// <param name="orderFinishedId"></param>
+        /// <returns></returns>
         public OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId)
         {
 
@@ -64,15 +86,22 @@ namespace GeekBurger.Production.Repository
             return orderFinished;
         }
 
-
-
-
+        /// <summary>
+        /// Busca área de produção por ID
+        /// </summary>
+        /// <param name="productionAreaId"></param>
+        /// <returns></returns>
         public ProductionArea GetProductionAreaById(Guid productionAreaId)
         {
             return _context.ProductionAreas?.Include(r => r.Restrictions)
                                             .FirstOrDefault(productionArea => productionArea.Id == productionAreaId);
         }
 
+        /// <summary>
+        /// Criação de nova área de produção
+        /// </summary>
+        /// <param name="productionArea"></param>
+        /// <returns></returns>
         public bool CreateProductionArea(ProductionArea productionArea)
         {
             productionArea.Id = new Guid();
@@ -81,6 +110,12 @@ namespace GeekBurger.Production.Repository
             return true;
         }
 
+        /// <summary>
+        /// Atualização de área de produção
+        /// </summary>
+        /// <param name="productionAreaId"></param>
+        /// <param name="updatedProductionArea"></param>
+        /// <returns></returns>
         public bool UpdateProductionArea(Guid productionAreaId, ProductionArea updatedProductionArea)
         {
             var productionAreaToUpdate = _context.ProductionAreas?
@@ -99,6 +134,11 @@ namespace GeekBurger.Production.Repository
             return true;
         }
 
+        /// <summary>
+        /// Remoção de área de produção
+        /// </summary>
+        /// <param name="productionAreaId"></param>
+        /// <returns></returns>
         public bool RemoveProductionArea(Guid productionAreaId)
         {
             var productionAreaToDelete = _context.ProductionAreas?.FirstOrDefault(pa => pa.Id == productionAreaId);
@@ -111,7 +151,9 @@ namespace GeekBurger.Production.Repository
             return true;
         }
 
-
+        /// <summary>
+        /// Atualização dos dados do repositório de Produção com as devidas modificações.
+        /// </summary>
         public void Save()
         {
             _productionAreaChangedService

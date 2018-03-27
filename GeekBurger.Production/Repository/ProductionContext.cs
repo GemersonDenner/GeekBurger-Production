@@ -17,6 +17,10 @@ namespace GeekBurger.Production.Repository
 
         public DbSet<ProductionArea> ProductionAreas { get; set; }
 
+        /// <summary>
+        /// Método chamado no momento que o modelo está sendo criado, é utilizado para configurar a estrutura de dados da área de produção
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductionAreaConfiguration());

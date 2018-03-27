@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace GeekBurger.Production.Repository
 {
+    /// <summary>
+    /// Interface utilizada para o repositório de área de produção
+    /// </summary>
     public interface IProductionAreaRepository
     {
         IEnumerable<ProductionArea> GetAvailableProductionAreas();
         IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName);
 
         OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId);
-
 
         ProductionArea GetProductionAreaById(Guid productionAreaId);
         bool CreateProductionArea(ProductionArea productionArea);

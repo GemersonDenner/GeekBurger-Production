@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GeekBurger.Production.Extension
 {
+    /// <summary>
+    /// Classe responsável por fazer a carga inicial dos dados do projeto
+    /// </summary>
     public static class ProductionContextExtension
     {
         public static void Seed(this ProductionContext context)
