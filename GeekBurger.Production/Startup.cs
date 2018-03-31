@@ -90,8 +90,8 @@ namespace GeekBurger.Production
 
             var availableProductionAreas = productionContext.ProductionAreas?.ToList();
             
-            newOrderService.SubscribeToTopic("ProductionAreaChangedTopic", availableProductionAreas);
-            //newOrderService.SubscribeToTopic(/*"neworder"*/ "orderpaid", availableProductionAreas);
+            //newOrderService.SubscribeToTopic("ProductionAreaChangedTopic", availableProductionAreas);
+            newOrderService.SubscribeToTopic(/*"neworder"*/ "orderpaid", availableProductionAreas);
             //paidOrderService.SubscribeToTopic("orderpaid", availableProductionAreas);
 
 
