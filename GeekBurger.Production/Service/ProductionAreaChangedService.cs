@@ -62,7 +62,7 @@ namespace GeekBurger.Production.Service
             {
                 Body = productChangedByteArray,
                 MessageId = Guid.NewGuid().ToString(),
-                Label = productionAreaChanged.ProductionArea.Name
+                Label = productionAreaChanged.ProductionArea.Id.ToString()
             };
         }
 

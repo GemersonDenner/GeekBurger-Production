@@ -55,16 +55,5 @@ namespace GeekBurger.Production.Controllers
             return Ok(productionAreasReturn);
         }
 
-        [HttpPost()]
-        public IActionResult OrderFinished(Guid orderFinishedId)
-        {
-            if (Guid.Empty.Equals(orderFinishedId) || orderFinishedId == null)
-                return BadRequest();
-
-            var orderFinishedMessage =_productionAreaRepository.PublishOrderFinished(orderFinishedId);
-
-            return Ok(orderFinishedMessage);
-        }
-
     }
 }

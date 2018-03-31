@@ -14,6 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json.Serialization;
 using GeekBurger.Production.Service;
 using Microsoft.Extensions.Configuration;
+using GeekBurger.Production.Model;
 
 namespace GeekBurger.Production
 {
@@ -57,6 +58,8 @@ namespace GeekBurger.Production
             services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
             services.AddScoped<IProductionAreaChangedService, ProductionAreaChangedService>();
             services.AddScoped<IOrderFinishedService, OrderFinishedService>();
+            services.AddScoped<INewOrderService, NewOrderService>();
+            //services.AddScoped<IPaidOrderService, PaidOrderService>();
 
 
             services.AddSwaggerGen(c => {
@@ -67,7 +70,12 @@ namespace GeekBurger.Production
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionContext productionContext)
+        public void Configure(  IApplicationBuilder app
+                                , IHostingEnvironment env
+                                , ProductionContext productionContext
+                                , INewOrderService newOrderService
+                                //, IPaidOrderService paidOrderService
+                             )
         {
             if (env.IsDevelopment())
             {
@@ -80,12 +88,17 @@ namespace GeekBurger.Production
 
             productionContext.Seed();
 
+            var availableProductionAreas = productionContext.ProductionAreas?.ToList();
+            
+            //newOrderService.SubscribeToTopic("ProductionAreaChangedTopic", availableProductionAreas);
+            newOrderService.SubscribeToTopic(/*"neworder"*/ "orderpaid", availableProductionAreas);
+            //paidOrderService.SubscribeToTopic("orderpaid", availableProductionAreas);
+
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>   {
                                         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Production Area API v1");
                                     }
-
                             );
 
 

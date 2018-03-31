@@ -15,8 +15,6 @@ namespace GeekBurger.Production.Repository
         IEnumerable<ProductionArea> GetAvailableProductionAreas();
         IEnumerable<ProductionArea> GetProductionAreasByRestrictionName(string restrictionName);
 
-        OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId);
-
         ProductionArea GetProductionAreaById(Guid productionAreaId);
         bool CreateProductionArea(ProductionArea productionArea);
         bool UpdateProductionArea(Guid productionAreaId, ProductionArea productionArea);

@@ -61,30 +61,6 @@ namespace GeekBurger.Production.Repository
                                                                                   ).ToList();
         }
 
-        /// <summary>
-        /// Método que efetua a publicação quando o pedido é finalizado (produzido)
-        /// </summary>
-        /// <param name="orderFinishedId"></param>
-        /// <returns></returns>
-        public OrderFinishedMessage PublishOrderFinished(Guid orderFinishedId)
-        {
-
-            OrderFinishedMessage orderFinished = new OrderFinishedMessage() { OrderFinishedId = orderFinishedId};
-
-            _orderFinishedService.AddToMessageList(orderFinished);
-
-
-            Random waitTime = new Random();
-            int seconds = waitTime.Next(5 * 1000, 21 * 1000);
-
-            System.Threading.Thread.Sleep(seconds);
-
-
-            _orderFinishedService.SendMessagesAsync();
-
-
-            return orderFinished;
-        }
 
         /// <summary>
         /// Busca área de produção por ID

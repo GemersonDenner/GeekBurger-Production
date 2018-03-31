@@ -76,7 +76,7 @@ namespace GeekBurger.Production.Service
             {
                 Body = orderFinishedByteArray,
                 MessageId = Guid.NewGuid().ToString(),
-                Label = String.Concat("Order finished Id: ", orderFinished.OrderFinishedId.ToString())
+                Label = orderFinished.OrderFinishedId.ToString()
             };
         }
 
