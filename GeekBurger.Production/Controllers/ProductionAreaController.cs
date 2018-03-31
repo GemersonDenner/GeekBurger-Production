@@ -13,7 +13,7 @@ using GeekBurger.Production.Helper;
 namespace GeekBurger.Production.Controllers
 {
     [Produces("application/json")]
-    [Route("api/productionareas")]
+    [Route("api/productionarea")]
     public class ProductionAreaController : Controller
     {
         private IProductionAreaRepository _productionAreaRepository;

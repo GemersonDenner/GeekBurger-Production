@@ -44,7 +44,8 @@ namespace GeekBurger.Production.Repository
         /// <returns></returns>
         public IEnumerable<ProductionArea> GetAvailableProductionAreas()
         {
-            return _context.ProductionAreas?.Include(r => r.Restrictions).ToList();
+            return _context.ProductionAreas?.Include(r => r.Restrictions)
+                                            .Where(pa => pa.Status == true).ToList();
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace GeekBurger.Production.Repository
         {
             return _context.ProductionAreas?
                                 .Include(pa => pa.Restrictions)
-                                .Where(w => !w.Restrictions.Any(r => r.Name.Equals(  restrictionName
+                                .Where(pa => !pa.Restrictions.Any(r => r.Name.Equals(  restrictionName
                                                                                     , StringComparison.InvariantCultureIgnoreCase))
                                                                                   ).ToList();
         }
